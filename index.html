@@ -70,6 +70,23 @@
     border-radius: 8px;
     scroll-margin-top: 64px;
   }
+  .slide.has-links { margin-bottom: 8px; }
+  .linkbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 20px;
+  }
+  .linkbar a {
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .linkbar a:hover { opacity: 0.85; }
 </style>
 </head>
 <body>
@@ -92,6 +109,17 @@
   const EXT = ".PNG";           // 확장자 (대소문자까지 똑같아야 합니다: .PNG 또는 .png)
   const COUNT = 31;             // 슬라이드 개수
 
+  // ▼ 슬라이드 번호: [버튼 이름, 링크] 목록. 슬라이드 바로 아래에 버튼으로 표시됩니다.
+  const LINKS = {
+    1:  [["GitHub", "https://github.com/Hyodonjoo"]],
+    4:  [["웹사이트 열기", "https://animebias.vercel.app/"],
+         ["GitHub", "https://github.com/Hyodonjoo/anime_bias_graph"]],
+    16: [["GitHub (서버)", "https://github.com/Hyodonjoo/version-management-server"],
+         ["GitHub (클라이언트)", "https://github.com/Hyodonjoo/agent-file-architecture"]],
+    24: [["GitHub", "https://github.com/Hyodonjoo/MBTI-recommend"]],
+    31: [["GitHub", "https://github.com/Hyodonjoo"]]
+  };
+
   const main = document.getElementById("slides");
   for (let i = 1; i <= COUNT; i++) {
     const img = document.createElement("img");
@@ -101,6 +129,21 @@
     img.alt = "포트폴리오 " + i + "번 슬라이드";
     img.loading = i <= 2 ? "eager" : "lazy";
     main.appendChild(img);
+
+    if (LINKS[i]) {
+      img.classList.add("has-links");
+      const bar = document.createElement("div");
+      bar.className = "linkbar";
+      LINKS[i].forEach(([label, url]) => {
+        const a = document.createElement("a");
+        a.href = url;
+        a.textContent = label;
+        a.target = "_blank";
+        a.rel = "noopener";
+        bar.appendChild(a);
+      });
+      main.appendChild(bar);
+    }
   }
 </script>
 
