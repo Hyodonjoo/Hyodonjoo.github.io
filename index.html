@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주효돈 포트폴리오</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --text: #1d1f23;
+    --sub: #5b6270;
+    --line: #e2e5ea;
+    --accent: #2f5bea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171b;
+      --card: #1e2126;
+      --text: #eceef2;
+      --sub: #a3a9b5;
+      --line: #2c3037;
+      --accent: #7c9bff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+    line-height: 1.6;
+  }
+  header {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 40px 16px 16px;
+  }
+  h1 { font-size: 26px; margin: 0 0 4px; }
+  .role { color: var(--sub); margin: 0 0 12px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 15px; }
+  .links a { color: var(--accent); text-decoration: none; }
+  .links a:hover { text-decoration: underline; }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+  }
+  nav a {
+    flex: none;
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  nav a:hover { border-color: var(--accent); color: var(--accent); }
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px 16px 60px;
+  }
+  .slide {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 0 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    scroll-margin-top: 64px;
+  }
+  footer {
+    text-align: center;
+    color: var(--sub);
+    font-size: 13px;
+    padding: 0 16px 40px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>주효돈</h1>
+  <p class="role">웹 개발 지원자</p>
+  <div class="links">
+    <a href="mailto:wngyehs99@naver.com">wngyehs99@naver.com</a>
+    <a href="https://github.com/Hyodonjoo" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://animebias.vercel.app/" target="_blank" rel="noopener">배포 웹서비스</a>
+  </div>
+</header>
+
+<nav>
+  <div class="inner">
+    <a href="#s1">처음</a>
+    <a href="#s3">애니메이션 선호도 차트</a>
+    <a href="#s14">자동 업데이트·오류 복구</a>
+    <a href="#s23">MBTI 여가활동 추천</a>
+  </div>
+</nav>
+
+<main id="slides"></main>
+
+<footer>슬라이드를 위에서 아래로 스크롤해 보세요.</footer>
+
+<script>
+  // ▼ 파워포인트에서 내보낸 이미지 파일 이름에 맞게 이 세 값만 바꾸면 됩니다.
+  const FOLDER = "slides";      // 이미지를 넣은 폴더 이름
+  const PREFIX = "슬라이드";     // 파일 이름 앞부분 (영문 PowerPoint라면 "Slide")
+  const EXT = ".PNG";           // 확장자 (대소문자까지 똑같아야 합니다: .PNG 또는 .png)
+  const COUNT = 31;             // 슬라이드 개수
+
+  const main = document.getElementById("slides");
+  for (let i = 1; i <= COUNT; i++) {
+    const img = document.createElement("img");
+    img.className = "slide";
+    img.id = "s" + i;
+    img.src = FOLDER + "/" + PREFIX + i + EXT;
+    img.alt = "포트폴리오 " + i + "번 슬라이드";
+    img.loading = i <= 2 ? "eager" : "lazy";
+    main.appendChild(img);
+  }
+</script>
+
+</body>
+</html>
