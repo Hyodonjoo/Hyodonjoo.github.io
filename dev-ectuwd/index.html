@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>주효돈 포트폴리오</title>
+<style>
+  :root {
+    --bg: #f4f5f7;
+    --card: #ffffff;
+    --text: #1d1f23;
+    --line: #e2e5ea;
+    --accent: #2f5bea;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15171b;
+      --card: #1e2126;
+      --text: #eceef2;
+      --line: #2c3037;
+      --accent: #7c9bff;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  }
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+  }
+  nav a {
+    flex: none;
+    padding: 6px 14px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+  nav a:hover { border-color: var(--accent); color: var(--accent); }
+  main {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px 16px 40px;
+  }
+  .slide {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0 0 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    scroll-margin-top: 64px;
+  }
+  .slide.has-links { margin-bottom: 8px; }
+  .linkbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 20px;
+  }
+  .linkbar a {
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .linkbar a:hover { opacity: 0.85; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <a href="#s1">시작</a>
+    <a href="#s3">프로젝트1</a>
+    <a href="#s14">프로젝트2</a>
+    <a href="#s23">프로젝트3</a>
+  </div>
+</nav>
+
+<main id="slides"></main>
+
+<script>
+  // ▼ 파워포인트에서 내보낸 이미지 파일 이름에 맞게 이 값들만 바꾸면 됩니다.
+  const FOLDER = "slides";      // 이미지를 넣은 폴더 이름
+  const PREFIX = "슬라이드";     // 파일 이름 앞부분 (영문 PowerPoint라면 "Slide")
+  const EXT = ".PNG";           // 확장자 (대소문자까지 똑같아야 합니다: .PNG 또는 .png)
+  const COUNT = 31;             // 슬라이드 개수
+
+  // ▼ 슬라이드 번호: [버튼 이름, 링크] 목록. 슬라이드 바로 아래에 버튼으로 표시됩니다.
+  const LINKS = {
+    1:  [["GitHub", "https://github.com/Hyodonjoo"]],
+    4:  [["웹사이트 열기", "https://animebias.vercel.app/"],
+         ["GitHub", "https://github.com/Hyodonjoo/anime_bias_graph"]],
+    16: [["GitHub (서버)", "https://github.com/Hyodonjoo/version-management-server"],
+         ["GitHub (클라이언트)", "https://github.com/Hyodonjoo/agent-file-architecture"]],
+    24: [["GitHub", "https://github.com/Hyodonjoo/MBTI-recommend"]],
+    31: [["GitHub", "https://github.com/Hyodonjoo"]]
+  };
+
+  const main = document.getElementById("slides");
+  for (let i = 1; i <= COUNT; i++) {
+    const img = document.createElement("img");
+    img.className = "slide";
+    img.id = "s" + i;
+    img.src = FOLDER + "/" + PREFIX + i + EXT;
+    img.alt = "포트폴리오 " + i + "번 슬라이드";
+    img.loading = i <= 2 ? "eager" : "lazy";
+    // 확장자 대소문자가 다르면(.PNG ↔ .png) 한 번 더 시도
+    img.onerror = function () {
+      this.onerror = null;
+      const alt = EXT === ".PNG" ? ".png" : ".PNG";
+      this.src = FOLDER + "/" + PREFIX + i + alt;
+    };
+    main.appendChild(img);
+
+    if (LINKS[i]) {
+      img.classList.add("has-links");
+      const bar = document.createElement("div");
+      bar.className = "linkbar";
+      LINKS[i].forEach(([label, url]) => {
+        const a = document.createElement("a");
+        a.href = url;
+        a.textContent = label;
+        a.target = "_blank";
+        a.rel = "noopener";
+        bar.appendChild(a);
+      });
+      main.appendChild(bar);
+    }
+  }
+</script>
+
+</body>
+</html>
